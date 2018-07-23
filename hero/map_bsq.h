@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 10:36:18 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 10:43:36 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 10:55:25 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef	struct	s_global
 
 typedef	struct	s_sq
 {
-	t_coord 	top;
-	t_coord		bot;
-}				t_sa;
+	t_coord 	*top;
+	t_coord		*bot;
+}				t_sq;
 
 #endif
