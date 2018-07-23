@@ -1,23 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_proto.h                                         :+:      :+:    :+:   */
+/*   verif_bsq.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/23 11:40:40 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 12:03:41 by erli             ###   ########.fr       */
+/*   Created: 2018/07/23 12:05:54 by erli              #+#    #+#             */
+/*   Updated: 2018/07/23 12:06:05 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PROTO_H
-# define FT_PROTO_H
+#include "map_bsq.h"
 
-# include "map_bsq.h"
-
-t_list		*create_elem(char c);
-t_list		*add_link_front(t_list *list, char c);
-t_list		*add_link_back(t_list *list, char c);
-t_global	*init_global(void);
-
-#endif
