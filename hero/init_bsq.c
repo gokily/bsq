@@ -1,43 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_bsq.h                                          :+:      :+:    :+:   */
+/*   bsq_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/23 10:36:18 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 11:40:31 by erli             ###   ########.fr       */
+/*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
+/*   Updated: 2018/07/23 11:46:07 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_BSQ_H
-# define MAP_BSQ_H
+#include "map_bsq.h"
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>
 
-typedef	struct	s_list
+void	int_bsq(int fd)
 {
-	char		c;
-	s_list		*next;
-}				t_list;
+	char buff[2];
 
-typedef	struct	s_coord
+
+
+}
+
+int		main(int argc, char **argv)
 {
-	int 		x;
-	int 		y;
-}				t_coord;
+	int			fd;
+	int			i;
+	t_global	*glob;
 
-typedef	struct	s_global
-{
-	int			nl;
-	int			nc;
-	char 		empty;
-	char		full;
-	char		obs;
-}				t_global;
 
-typedef	struct	s_sq
-{
-	t_coord 	*top;
-	t_coord		*bot;
-}				t_sq;
-
-#endif
+	i = 1;
+	if (argc == 1)
+		bsq_init(0);
+	else
+	{
+		while (i < argc)
+		{
+			fd = open(argv[i], O_RDONLY);
+			init_bsq(fd);
+			close(fd);
+			i++;
+		}
+	}
+	return (0);
+}
