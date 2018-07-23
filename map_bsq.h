@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 10:36:18 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 11:20:36 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 13:02:14 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef	struct	s_global
 	char 		empty;
 	char		full;
 	char		obs;
+	int			**map;
 }				t_global;
 
 typedef	struct	s_sq
