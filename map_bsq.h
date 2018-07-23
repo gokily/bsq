@@ -6,12 +6,18 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 10:36:18 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 10:55:25 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 11:20:36 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_BSQ_H
 # define MAP_BSQ_H
+
+typedef	struct	s_list
+{
+	char		c;
+	s_list		*next;
+}				t_list;
 
 typedef	struct	s_coord
 {
