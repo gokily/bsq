@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 16:54:19 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 17:01:49 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <sys/uio.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+#include <stdio.h>
 
 void	convert_first_line(t_list *list, t_global *glob, int i)
 {
@@ -121,8 +123,6 @@ int		main(int argc, char **argv)
 			i++;
 		}
 	}
-
-
 
 
 
