@@ -6,11 +6,12 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 17:46:28 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 20:03:37 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map_bsq.h"
+#include "ft_proto.h"
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/uio.h>
@@ -19,36 +20,44 @@
 
 #include <stdio.h>
 
-void	convert_first_line(t_list *list, t_global *glob, int i)
+int		convert_first_line(t_list *list, t_global *glob, int nc)
 {
 	int		i;
-	t_list	*tmp;
 
+	print_list(list);
 	i = 0;
+	glob->nc = nc;
+	printf("nc = %d\n", glob->nc);
+
 	while (i < glob->nl)
 	{
+		print_list(list);
 		if (!(glob->map[i] = (int *)malloc(sizeof(int) * glob->nc)))
-			return (0);
+			return (-2);
 		i++;
 	}
 	i = 0;
-	while (i < glob->nc)
+	puts("apres malloc");
+	print_list(list);
+	while (i < glob->nc && list != 0)
 	{
-		symbol_to_int(glob, 0, i, list->c);
-		tmp = list;
+		printf("Avant conversion en int\n");
+		symbol_to_int(glob, list->c, 0, i);
+		printf("list c = %c\n",list->c);
 		list = list->next;
-		free(tmp);
 		i++;
 	}
 
 
 	i = 0;
+	printf("premiere ligne\n");
 	while (i < glob->nc)
 	{
-		printf("%d, ", glob->tab[0][i]);
+		printf("%d, ", glob->map[0][i]);
 		i++;
 	}
 	printf("\n");
+	return (0);
 }
 
 int		convert_map_bsq(int fd, t_global *glob, int check)
@@ -61,8 +70,8 @@ int		convert_map_bsq(int fd, t_global *glob, int check)
 		return (-1);
 	i = 0;
 	j = 1;
-	buff = "e";
-	while (read(0, buff, 1) != 0 && check == 1)
+	buff[0] = 'e';
+	while (read(fd, buff, 1) != 0 && check == 1)
 	{
 		if (buff[0] != '\n')
 		{
@@ -78,9 +87,10 @@ int		convert_map_bsq(int fd, t_global *glob, int check)
 			i = 0;
 		}
 	}
+	return (0);
 }
 
-int		int_bsq(int fd, t_global *glob)
+int		init_bsq(int fd, t_global *glob)
 {
 	char	buff[2];
 	int		i;
@@ -88,9 +98,10 @@ int		int_bsq(int fd, t_global *glob)
 	int		check;
 
 	i = 0;
-	buff = "e"
-	while (ret = read(fd, buff, 1) != 0 && buff[0] != '\n')
+	buff[0] = 'e';
+	while (read(fd, buff, 1) != 0 && buff[0] != '\n')
 	{
+
 		if(buff[0] >= ' ' && buff[0] < 127)
 			list = add_link_front(list, buff[0]);
 		else
@@ -100,14 +111,21 @@ int		int_bsq(int fd, t_global *glob)
 	if (i > 13)
 		return (-1);
 	check = test_map_param(list, glob);
+	printf(" check = %d\n", check);
+	printf("Parametre : nl = %d, empty = %c, obs = %c, full = %c\n", glob->nl, glob->empty, glob->obs, glob->full);
+	i = 0;
+	list = 0;
 	while (read(fd, buff, 1) != 0 && buff[0] != '\n' && check == 1)
 	{
 		check = test_char(buff[0], glob);
-		list == add_link_back(list, buff[0]);
+		list = add_link_back(list, buff[0]);
+		printf("char = %c\n", list->c);
 		i++;
 	}
+	print_list(list);
+	printf(" check = %d et premier char = %c\n", check, list->c);
 	convert_first_line(list, glob, i);
-	return (convert_map_bsq(fd, glob, check);
+	return (convert_map_bsq(fd, glob, check));
 }
 
 int		main(int argc, char **argv)
