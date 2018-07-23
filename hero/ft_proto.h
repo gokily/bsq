@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:40:40 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 14:00:30 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 16:54:37 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_list		*create_elem(char c);
 t_list		*add_link_front(t_list *list, char c);
 t_list		*add_link_back(t_list *list, char c);
 t_global	*init_global(void);
-void		symbol_to_int(t_global *glob, int y, int x);
+int			test_map_param(t_list *list, t_global *glob);
+int			test_char(char c, t_global *glob);
+void		symbol_to_int(t_global *glob, char c, int y, int x);
 
 #endif

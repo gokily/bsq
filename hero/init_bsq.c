@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 14:00:35 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 16:54:19 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,33 @@ void	convert_first_line(t_list *list, t_global *glob, int i)
 	}
 }
 
-int		convert_map_bsq(t_global *glob)
+int		convert_map_bsq(int fd, t_global *glob, int check)
 {
+	int i;
+	int j;
+	char buff[2];
 
-
+	if (check == 0)
+		return (-1);
+	i = 0;
+	j = 1;
+	buff = "e";
+	while (read(0, buff, 1) != 0 && check == 1)
+	{
+		if (buff[0] != '\n')
+		{
+			check = test_char(buff[0], glob);
+			symbol_to_int(glob, buff[0], j, i);
+			i++;
+		}
+		else if (i != glob->nc)
+			return (-1);
+		else
+		{
+			j++;
+			i = 0;
+		}
+	}
 }
 
 int		int_bsq(int fd, t_global *glob)
@@ -63,7 +86,10 @@ int		int_bsq(int fd, t_global *glob)
 			list = add_link_front(list, buff[0]);
 		else
 			return (-1);
+		i++;
 	}
+	if (i > 13)
+		return (-1);
 	check = test_map_param(list, glob);
 	while (read(fd, buff, 1) != 0 && buff[0] != '\n' && check == 1)
 	{
@@ -72,7 +98,7 @@ int		int_bsq(int fd, t_global *glob)
 		i++;
 	}
 	convert_first_line(list, glob, i);
-	return (convert_map_bsq(glob));
+	return (convert_map_bsq(fd, glob, check);
 }
 
 int		main(int argc, char **argv)
@@ -84,7 +110,7 @@ int		main(int argc, char **argv)
 	glob = init_global();
 	i = 1;
 	if (argc == 1)
-		bsq_init(0, glob);
+		init_bsq(0, glob);
 	else
 	{
 		while (i < argc)
@@ -95,5 +121,11 @@ int		main(int argc, char **argv)
 			i++;
 		}
 	}
+
+
+
+
+
+
 	return (0);
 }
