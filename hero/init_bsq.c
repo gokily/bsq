@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 17:01:49 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 17:46:28 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,15 @@ void	convert_first_line(t_list *list, t_global *glob, int i)
 		free(tmp);
 		i++;
 	}
+
+
+	i = 0;
+	while (i < glob->nc)
+	{
+		printf("%d, ", glob->tab[0][i]);
+		i++;
+	}
+	printf("\n");
 }
 
 int		convert_map_bsq(int fd, t_global *glob, int check)
@@ -82,9 +91,7 @@ int		int_bsq(int fd, t_global *glob)
 	buff = "e"
 	while (ret = read(fd, buff, 1) != 0 && buff[0] != '\n')
 	{
-		if (buff[0] >= '0' && buff[0] <= '9')
-			list = add_link_back(list, buff[0]);
-		else if(buff[0] >= ' ' && buff[0] < 127)
+		if(buff[0] >= ' ' && buff[0] < 127)
 			list = add_link_front(list, buff[0]);
 		else
 			return (-1);

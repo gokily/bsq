@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 15:00:35 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 15:55:35 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 17:29:37 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,24 @@
 int		get_nl(t_list *list, t_global *glob)
 {
 	int nb;
-	int i;
+	int pow;
 
-	nb = 0;
+	nb = list->c - '0';
 	i = 0;
-	while (i < 10 && list != 0 && list->c >= '0' && list->c <= '9')
+	pow = 10;
+	list = list->next;
+	while (pow < 1000000000 && list != 0 && list->c >= '0' && list->c <= '9')
 	{
-		nb = (nb * 10) + list->c - '0';
+		nb = nb + (list->c - '0') * pow;
 		list = list->next;
-		i++;
+		pow = pow * 10;
 	}
-	if (i < 10 et list != 0)
+	if (pow < 1000000000 && list != 0)
 		return (-1);
-	if (list != 0 && nb > 214748364)
-		return (-1);
-	nb = nb * 10 + list->c - '0';
+	if (list != 0 && nb > 147483647)
+		return (list->c - '0' > 1 ? 0 : 1);
+	if (list != 0 && nb <= 147483647)
+		return (list->c - '0' > 2 ? 0 : 1);
 	if (nb < 0)
 		return (-1);
 	glob->nl = nb;
