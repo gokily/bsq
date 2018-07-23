@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 13:01:04 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 14:00:35 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,36 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <unistd.h>
+#include <stdlib.h>
+
+void	convert_first_line(t_list *list, t_global *glob, int i)
+{
+	int		i;
+	t_list	*tmp;
+
+	i = 0;
+	while (i < glob->nl)
+	{
+		if (!(glob->map[i] = (int *)malloc(sizeof(int) * glob->nc)))
+			return (0);
+		i++;
+	}
+	i = 0;
+	while (i < glob->nc)
+	{
+		symbol_to_int(glob, 0, i, list->c);
+		tmp = list;
+		list = list->next;
+		free(tmp);
+		i++;
+	}
+}
+
+int		convert_map_bsq(t_global *glob)
+{
+
+
+}
 
 int		int_bsq(int fd, t_global *glob)
 {
@@ -24,8 +54,7 @@ int		int_bsq(int fd, t_global *glob)
 	int		check;
 
 	i = 0;
-	buff[1] = '\0';
-	buff[0] = 'e';
+	buff = "e"
 	while (ret = read(fd, buff, 1) != 0 && buff[0] != '\n')
 	{
 		if (buff[0] >= '0' && buff[0] <= '9')
@@ -43,7 +72,7 @@ int		int_bsq(int fd, t_global *glob)
 		i++;
 	}
 	convert_first_line(list, glob, i);
-	return (convert_map_bsq(glob, map);
+	return (convert_map_bsq(glob));
 }
 
 int		main(int argc, char **argv)
