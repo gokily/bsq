@@ -1,0 +1,9 @@
+nc=30
+nl=20
+density=2
+perl ../map-generator.pl $nl $nc $density .ox > map00
+cat map00
+echo "number of obstacles"
+cat map00 | tr -d '.' | grep -v $nc | sed 's/o/ + 1/g' | tr '\n' " " | sed 's/+//' | bc
+echo "converted map"
+./init map00
