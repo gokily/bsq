@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 14:24:34 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 18:58:42 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/24 09:32:14 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,32 @@ t_global	*init_global(void)
 void		symbol_to_int(t_global *glob, char c, int y, int x)
 {
 	int incr;
+	int top;
+	int behind;
 
 	incr = 0;
+	top = 0;
+	behind = 0;
 	if (c == glob->obs)
 		incr = 1;
-//	printf("incr = %d\n", incr);
 	if (x == 0)
-		glob->map[y][x] = (y == 0) ? incr : glob->map[y - 1][x] + incr;
+		behind = 0;
 	else
-		glob->map[y][x] = (y == 0) ? glob->map[y][x - 1] + incr :
-			glob->map[y - 1][x] + glob->map[y][x - 1] + incr;
+		behind = (glob->map)[y][x - 1];
+	if (y == 0)
+		top = 0;
+	else
+	{
+		top = (glob->map)[y - 1][x];
+	}
+	(glob->map)[y][x] = top + behind + incr;
+	if (x >= 1 && y >= 1)
+		(glob->map)[y][x] -= (glob->map)[y - 1][x - 1];
+}
+
+int			map_alloc(t_global *glob, int i)
+{
+	if (!((glob->map)[i] = (int *)malloc(sizeof(int) * glob->nc)))
+		return (-2);
+	return (0);
 }

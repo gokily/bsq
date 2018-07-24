@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 15:00:35 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 19:30:21 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/23 21:40:34 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		test_map_param(t_list *list, t_global *glob)
 	nl = get_nl(list->next, glob);
 	if (nl < 0)
 		return (-1);
-	if (!(glob->map = (int **)malloc(sizeof(int*) * nl)))
+	if (!((glob->map) = (int **)malloc(sizeof(int*) * nl)))
 		return (-2);
 	return (1);
 }
