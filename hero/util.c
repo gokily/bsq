@@ -6,13 +6,19 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 14:24:34 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 11:38:19 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/24 12:24:23 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map_bsq.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+
+void		ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
 
 t_global	*init_global(void)
 {
@@ -65,7 +71,7 @@ void		print_map(t_global *glob, int n)
 	j = 0;
 	while (j < n)
 	{
-		printf("\n| ");
+		printf("| ");
 		while (i < glob->nc)
 		{
 			if (glob->map[j][i] < 1000)
@@ -77,6 +83,7 @@ void		print_map(t_global *glob, int n)
 			printf("%d | ", glob->map[j][i]);
 			i++;
 		}
+		printf("\n");
 		i = 0;
 		j++;
 	}

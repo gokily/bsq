@@ -6,13 +6,14 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 15:00:35 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 21:40:34 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/24 17:25:06 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map_bsq.h"
 #include <stdlib.h>
 #include "ft_proto.h"
+#include <stdio.h>
 
 int		get_nl(t_list *list, t_global *glob)
 {
@@ -60,7 +61,7 @@ int		test_map_param(t_list *list, t_global *glob)
 	if (list->next == 0)
 		return (-1);
 	nl = get_nl(list->next, glob);
-	if (nl < 0)
+	if (nl <= 0)
 		return (-1);
 	if (!((glob->map) = (int **)malloc(sizeof(int*) * nl)))
 		return (-2);
@@ -70,6 +71,6 @@ int		test_map_param(t_list *list, t_global *glob)
 int		test_char(char c, t_global *glob)
 {
 	if (c != glob->empty && c != glob->obs)
-		return (0);
+		return (-1);
 	return (1);
 }

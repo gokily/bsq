@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 11:38:09 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/24 17:30:05 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		convert_first_line(t_list *list, t_global *glob, int nc)
 		symbol_to_int(glob, list->c, 0, i);
 		next_link(&list);
 		i++;
-	}
+	}	
 	return (0);
 }
 
@@ -52,7 +52,7 @@ int		convert_map_bsq(int fd, t_global *glob, int check)
 	{
 		if (buff[0] != '\n')
 		{
-			test_char(buff[0], glob);
+			check = test_char(buff[0], glob);
 			symbol_to_int(glob, buff[0], j, i);
 			i++;
 		}
@@ -65,7 +65,10 @@ int		convert_map_bsq(int fd, t_global *glob, int check)
 			map_alloc(glob, j);
 		}
 	}
-	return (0);
+	printf("obstacle found : %d\n", glob->map[glob->nl-1][glob->nc-1]);
+	if (j != glob->nl)
+		check = -1;
+	return (check);
 }
 
 int		init_bsq(int fd, t_global *glob)
@@ -76,10 +79,10 @@ int		init_bsq(int fd, t_global *glob)
 	int		check;
 
 	i = 0;
+	list = 0;
 	buff[0] = 'e';
 	while (read(fd, buff, 1) != 0 && buff[0] != '\n')
 	{
-
 		if(buff[0] >= ' ' && buff[0] < 127)
 			list = add_link_front(list, buff[0]);
 		else
@@ -97,6 +100,8 @@ int		init_bsq(int fd, t_global *glob)
 		list = add_link_back(list, buff[0]);
 		i++;
 	}
+	if (i == 0)
+		check = -1;
 	convert_first_line(list, glob, i);
 	return (convert_map_bsq(fd, glob, check));
 }
@@ -106,23 +111,41 @@ int		main(int argc, char **argv)
 	int			fd;
 	int			i;
 	t_global	*glob;
+	t_sq 		*sol;
+	int			error;
 
 	glob = init_global();
 	i = 1;
+
 	if (argc == 1)
-		init_bsq(0, glob);
+	{
+		error = init_bsq(0, glob);
+		if (error == -1)
+			puts("Map Error");
+		else
+		{
+			sol = find_solution(glob->map, *glob);
+			print_solution(*sol, *glob);
+		}
+	}	
 	else
 	{
 		while (i < argc)
 		{
 			fd = open(argv[i], O_RDONLY);
-			init_bsq(fd, glob);
+			error = init_bsq(fd, glob);
 			close(fd);
+			if (error == -1)
+				puts("Map Error");
+			else
+			{		
+				sol = find_solution(glob->map, *glob);
+				print_solution(*sol, *glob);
+			}
+			if (argc > 2 && i < argc - 1)
+				printf("\n");
 			i++;
 		}
 	}
-	print_map(glob, glob->nl);
-
-
 	return (0);
 }
