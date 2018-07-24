@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 14:24:34 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 09:32:14 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/24 11:38:19 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ void		symbol_to_int(t_global *glob, char c, int y, int x)
 	if (y == 0)
 		top = 0;
 	else
-	{
 		top = (glob->map)[y - 1][x];
-	}
 	(glob->map)[y][x] = top + behind + incr;
 	if (x >= 1 && y >= 1)
 		(glob->map)[y][x] -= (glob->map)[y - 1][x - 1];
@@ -53,7 +51,33 @@ void		symbol_to_int(t_global *glob, char c, int y, int x)
 
 int			map_alloc(t_global *glob, int i)
 {
-	if (!((glob->map)[i] = (int *)malloc(sizeof(int) * glob->nc)))
+	if (!((glob->map)[i] = (int *)malloc(sizeof(int) * (glob->nc))))
 		return (-2);
 	return (0);
+}
+
+void		print_map(t_global *glob, int n)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (j < n)
+	{
+		printf("\n| ");
+		while (i < glob->nc)
+		{
+			if (glob->map[j][i] < 1000)
+				printf(" ");
+			if (glob->map[j][i] < 100)
+				printf(" ");
+			if (glob->map[j][i] < 10)
+				printf(" ");
+			printf("%d | ", glob->map[j][i]);
+			i++;
+		}
+		i = 0;
+		j++;
+	}
 }

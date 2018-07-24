@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:16:40 by erli              #+#    #+#             */
-/*   Updated: 2018/07/23 19:58:17 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/24 11:34:16 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	next_link(t_list **list)
 		return ;
 	tmp = *list;
 	*list = (*list)->next;
-	free(tmp);
+//	free(tmp);
 }
 
 void	print_list(t_list *list)
