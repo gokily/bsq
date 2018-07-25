@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 10:49:09 by gly               #+#    #+#             */
-/*   Updated: 2018/07/24 16:10:48 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/25 16:12:48 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		valid_place(t_coord pos, int size, int **tab, t_global map_info)
 	}
 	else if (pos.y >= 1)
 		return (!(tab[pos.y + size - 1][pos.x + size - 1] -
-					tab[pos.y - 1][pos.x +size - 1]));
+					tab[pos.y - 1][pos.x + size - 1]));
 	else
 		return (!(tab[pos.y + size - 1][pos.x + size - 1]));
 }

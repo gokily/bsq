@@ -79,3 +79,17 @@ void		print_map(t_global *glob, int n)
 		j++;
 	}
 }
+
+void		free_glob(t_global *glob)	
+{
+	int j;
+
+	j = 0;
+	while (j < glob->nl)
+	{
+		free(glob->map[j]);
+		j++;
+	}
+	free(glob->map);
+	free(glob);
+}

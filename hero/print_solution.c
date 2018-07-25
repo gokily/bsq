@@ -6,58 +6,63 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 13:12:08 by gly               #+#    #+#             */
-/*   Updated: 2018/07/24 14:07:22 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/25 17:00:03 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map_bsq.h"
 #include "ft_proto.h"
-#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-int		is_obs(t_coord pos, int **tab)
+int		is_obs(int x, int y, int **tab)
 {
-	if (pos.x >= 1)
+	if (x >= 1)
 	{
-		if (pos.y >= 1)
-			return (tab[pos.y - 1][pos.x - 1] - tab[pos.y][pos.x - 1] -
-						tab[pos.y - 1][pos.x] + tab[pos.y][pos.x]);
+		if (y >= 1)
+			return (tab[y - 1][x - 1] - tab[y][x - 1] -
+					tab[y - 1][x] + tab[y][x]);
 		else
-			return (tab[pos.y][pos.x] -	tab[pos.y][pos.x - 1]);
+			return (tab[y][x] - tab[y][x - 1]);
 	}
-	else if (pos.y >= 1)
-		return (tab[pos.y][pos.x] - tab[pos.y - 1][pos.x]);
+	else if (y >= 1)
+		return (tab[y][x] - tab[y - 1][x]);
 	else
-		return (tab[pos.y][pos.x]);
+		return (tab[y][x]);
 }
 
-void	print_pos(t_coord tmp, int **tab, t_sq sol, t_global map)
+void	print_line(t_sq sol, t_global map, int y, char *str)
 {
-	if (tmp.x >= sol.top->x && tmp.x <= sol.bot->x &&
-			tmp.y >= sol.top->y && tmp.y <= sol.bot->y)
-		ft_putchar(map.full);
-	else if (!is_obs(tmp, tab))
-		ft_putchar(map.empty);
-	else
-		ft_putchar(map.obs);
+	int		x;
+
+	x = 0;
+	while (x < map.nc)
+	{
+		if (x >= sol.top->x && x <= sol.bot->x &&
+				y >= sol.top->y && y <= sol.bot->y)
+			str[x] = map.full;
+		else if (!is_obs(x, y, map.map))
+			str[x] = map.empty;
+		else
+			str[x] = map.obs;
+		x++;
+	}
+	str[x] = '\n';
+	write(1, str, x + 1);
 }
 
 void	print_solution(t_sq sol, t_global map_info)
 {
-	t_coord tmp;
-	int		**tab;
+	char	*str;
+	int		nline;
 
-	tab = map_info.map;
-	tmp.y = 0;
-	tmp.x = 0;
-	while (tmp.y < map_info.nl)
+	if (!(str = malloc(sizeof(char) * map_info.nc)))
+		return ;
+	nline = 0;
+	while (nline < map_info.nl)
 	{
-		tmp.x = 0;
-		while (tmp.x < map_info.nc)
-		{
-			print_pos(tmp, tab, sol, map_info);
-			tmp.x++;
-		}
-		tmp.y++;
-		printf("  Line %i\n", tmp.y);
+		print_line(sol, map_info, nline, str);
+		nline++;
 	}
+	free(str);
 }

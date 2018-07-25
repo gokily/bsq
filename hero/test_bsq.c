@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 15:00:35 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 18:00:55 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/25 16:13:18 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int		get_nl(t_list *list, t_global *glob)
 	i = 0;
 	pow = 10;
 	next_link(&list);
-	while (pow <= 1000000000 && list != 0 && list->c >= '0' && list->c <= '9')
+	while (pow <= 100000000 && list != 0 && list->c >= '0' && list->c <= '9')
 	{
 		nb = nb + (list->c - '0') * pow;
 		next_link(&list);
 		pow = pow * 10;
 	}
-	if (pow <= 1000000000 && list != 0)
+	if (pow <= 100000000 && list != 0)
 		return (-1);
 	if (list != 0 && nb > 147483647)
 		return (list->c - '0' > 1 ? 0 : 1);
@@ -55,7 +55,8 @@ int		test_map_param(t_list *list, t_global *glob)
 	next_link(&list);
 	glob->obs = list->c;
 	next_link(&list);
-	if (glob->obs == list->c || glob->full == list->c || glob->obs == glob->full)
+	if (glob->obs == list->c || glob->full == list->c ||
+			glob->obs == glob->full)
 		return (-1);
 	glob->empty = list->c;
 	if (list->next == 0)
