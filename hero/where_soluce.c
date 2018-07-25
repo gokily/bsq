@@ -5,61 +5,72 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hutricot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/23 14:46:54 by hutricot          #+#    #+#             */
-/*   Updated: 2018/07/23 17:33:50 by hutricot         ###   ########.fr       */
+/*   Created: 2018/07/24 23:40:46 by hutricot          #+#    #+#             */
+/*   Updated: 2018/07/25 12:03:50 by hutricot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_ok(int **tab, t_sq *v)
+#include "map_bsq.h"
+#include <stdlib.h>
+
+int			that_work(t_sq co, int **tab, int s)
 {
-	int nb;
-
-	if	(tab[v->top.y])
-		nb = 0;
-	else
-		nb = tab[v->bot.y][v->bot.x] + tab[v->top.y - 1][v->top.x - 1] - 
-			tab[v->bot.y][v->top.x - 1] - tab[v->top.y - 1][v->bot.x];
-	if (nb = 0)
-		return (1);
-	else
-		return (0);
-}
-
-t_sq	ft_value(y1, x1, y2, x2)
-{
-	t_sq *v;
-
-	value->bot.y1 = 0;
-	value->bot.x1 = 0;
-	value->top.y2 = 0;
-	value->top.x2 = 0;
-
-}
-
-t_sq	*where(t_sq sol,int **tab,)
-{
-	t_sq *value;
-	t_sq *best_sq;
-	int s;
-	
-	value = ft_value(0, 0, 0, 0);
-	s = 0;
-	while (value->bot.->y < t_global.nl && value->bot->y < t_global.nc)
-	{	
-		if (ft_ok(tab, value))
-		{
-			value->bot.x++;
-			value->bot.y++;
-			best_sq = value
-			s++;
-		}
-		else if (x < t_global.nc)
-		{
-			value->bot.x++;
-			value->top.x++;
-		}
-		else
-			value = ft_value(value->bot.y + 1 , s, value->top.y, 0);
+	if (co.top->y == 0 && co.top->x == 0)
+		return (tab[co.top->y + s][co.top->x + s]);
+	if (co.top->y == 0)
+	{
+		return (tab[co.top->y + s][co.top->x + s] -
+			tab[co.top->y + s][co.top->x - 1]);
 	}
-	return (best_sq);
+	if (co.top->x == 0)
+	{
+		return (tab[co.top->y + s][co.top->x + s] -
+			tab[co.top->y - 1][co.top->x + s]);
+	}
+	return (tab[co.top->y + s][co.top->x + s] +
+			tab[co.top->y - 1][co.top->x - 1]
+				- tab[co.top->y - 1][co.top->x + s] -
+					tab[co.top->y + s][co.top->x - 1]);
+}
+
+t_sq		r_v(int y, int x, int y1, int x1)
+{
+	t_sq	v;
+
+	v.top = malloc(sizeof(t_coord));
+	v.bot = malloc(sizeof(t_coord));
+	v.top->y = y;
+	v.top->x = x;
+	v.bot->y = y1;
+	v.bot->y = x1;
+	return (v);
+}
+
+t_sq		where(int **tab, t_global data)
+{
+	t_sq	co;
+	t_sq	best;
+	int		s;
+
+	co = r_v(0, 0, 0, 0);
+	s = 0;
+	while (co.top->y + s < data.nl)
+	{
+		while (co.top->x + s < data.nc)
+		{
+			if (that_work(co, tab, s) == 0)
+			{
+				best = r_v(co.top->y, co.top->x,
+						(co.top->y) + s, (co.top->x) + s);
+				s++;
+			}
+			else if (co.top->x + s < data.nc)
+				co.top->x++;
+		}
+		co.top->x = 0;
+		co.top->y++;
+	}
+	best.bot->y = best.top->y + s - 1;
+	best.bot->x = best.top->x + s - 1;
+	return (best);
 }
