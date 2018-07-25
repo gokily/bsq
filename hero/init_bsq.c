@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 17:30:05 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/25 09:29:53 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,17 @@
 int		convert_first_line(t_list *list, t_global *glob, int nc)
 {
 	int		i;
+	int		incr;
 
 	glob->nc = nc;
 	map_alloc(glob, 0);
 	i = 0;
+	incr = 0;
 	while (i < glob->nc && list != 0)
 	{
-		symbol_to_int(glob, list->c, 0, i);
+		if (list->c == glob->obs)
+			incr++;
+		glob->map[0][i] = incr;
 		next_link(&list);
 		i++;
 	}	
@@ -102,6 +106,8 @@ int		init_bsq(int fd, t_global *glob)
 	}
 	if (i == 0)
 		check = -1;
+	if (check == -1)
+		return (-1);
 	convert_first_line(list, glob, i);
 	return (convert_map_bsq(fd, glob, check));
 }
@@ -139,6 +145,7 @@ int		main(int argc, char **argv)
 				puts("Map Error");
 			else
 			{		
+				print_map(glob, glob->nl);
 				sol = find_solution(glob->map, *glob);
 				print_solution(*sol, *glob);
 			}

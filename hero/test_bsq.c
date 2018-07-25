@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 15:00:35 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 17:25:06 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/24 18:00:55 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		test_map_param(t_list *list, t_global *glob)
 	next_link(&list);
 	glob->obs = list->c;
 	next_link(&list);
-	if (glob->obs == list->c)
+	if (glob->obs == list->c || glob->full == list->c || glob->obs == glob->full)
 		return (-1);
 	glob->empty = list->c;
 	if (list->next == 0)

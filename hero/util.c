@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 14:24:34 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 12:24:23 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/24 20:23:07 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,9 @@ void		symbol_to_int(t_global *glob, char c, int y, int x)
 		behind = 0;
 	else
 		behind = (glob->map)[y][x - 1];
-	if (y == 0)
-		top = 0;
-	else
-		top = (glob->map)[y - 1][x];
+	top = (glob->map)[y - 1][x];
 	(glob->map)[y][x] = top + behind + incr;
-	if (x >= 1 && y >= 1)
+	if (x >= 1)
 		(glob->map)[y][x] -= (glob->map)[y - 1][x - 1];
 }
 
