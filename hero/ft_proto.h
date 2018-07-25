@@ -6,14 +6,16 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:40:40 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 13:45:43 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/25 17:48:23 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PROTO_H
 # define FT_PROTO_H
 
+# define BUFF_SIZE 20000
 # include "map_bsq.h"
+
 
 t_list		*create_elem(char c);
 t_list		*add_link_front(t_list *list, char c);
