@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 14:24:34 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 20:23:07 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/25 15:14:38 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,18 @@ void		print_map(t_global *glob, int n)
 		i = 0;
 		j++;
 	}
+}
+
+void		free_glob(t_global *glob)	
+{
+	int j;
+
+	j = 0;
+	while (j < glob->nl)
+	{
+		free(glob->map[j]);
+		j++;
+	}
+	free(glob->map);
+	free(glob);
 }

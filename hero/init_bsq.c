@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
-/*   Updated: 2018/07/25 09:45:20 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/25 15:13:55 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,10 @@ int		convert_map_bsq(int fd, t_global *glob, int check)
 	return (check);
 }
 
-int		init_bsq(int fd, t_global *glob)
+int		init_bsq(int fd, t_global *glob, t_list *list)
 {
 	char	buff[2];
 	int		i;
-	t_list	*list;
 	int		check;
 
 	i = 0;
@@ -119,19 +118,22 @@ int		main(int argc, char **argv)
 	t_global	*glob;
 	t_sq 		*sol;
 	int			error;
+	t_list		*list;
 
 	glob = init_global();
 	i = 1;
-
 	if (argc == 1)
 	{
-		error = init_bsq(0, glob);
+		list = 0;
+		error = init_bsq(0, glob, list);
 		if (error == -1)
 			puts("Map Error");
 		else
 		{
 			sol = find_solution(glob->map, *glob);
 			print_solution(*sol, *glob);
+			free_glob(glob);
+			list_clear(&list);
 		}
 	}	
 	else
@@ -139,14 +141,23 @@ int		main(int argc, char **argv)
 		while (i < argc)
 		{
 			fd = open(argv[i], O_RDONLY);
-			error = init_bsq(fd, glob);
-			close(fd);
-			if (error == -1)
+			if (fd < 0)
 				puts("Map Error");
 			else
-			{		
-				sol = find_solution(glob->map, *glob);
-				print_solution(*sol, *glob);
+			{
+				list = 0;
+				error = init_bsq(fd, glob, list);
+				close(fd);
+				if (error == -1)
+					puts("Map Error");
+				else
+				{		
+					sol = find_solution(glob->map, *glob);
+					print_solution(*sol, *glob);
+					print_map(glob, glob->nl);
+					free_glob(glob);
+					list_clear(&list);
+				}
 			}
 			if (argc > 2 && i < argc - 1)
 				printf("\n");

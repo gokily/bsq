@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:16:40 by erli              #+#    #+#             */
-/*   Updated: 2018/07/24 17:23:56 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/25 14:16:07 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,15 @@ void	next_link(t_list **list)
 //	free(tmp);
 }
 
-void	print_list(t_list *list)
+void	list_clear(t_list **list)
 {
-	while (list != 0)
+	t_list *tmp;
+
+	tmp = *list;
+	while (tmp != 0)
 	{
-		printf("%c\t", list->c);
-		list = list->next;
+		free(tmp);
+		tmp = tmp->next;
 	}
-	printf("\n");
+	*list = 0;
 }
