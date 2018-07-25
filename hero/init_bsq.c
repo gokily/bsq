@@ -6,7 +6,7 @@
 /*   By: erli <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:05:08 by erli              #+#    #+#             */
-/*   Updated: 2018/07/25 09:29:53 by erli             ###   ########.fr       */
+/*   Updated: 2018/07/25 09:45:20 by erli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ int		main(int argc, char **argv)
 				puts("Map Error");
 			else
 			{		
-				print_map(glob, glob->nl);
 				sol = find_solution(glob->map, *glob);
 				print_solution(*sol, *glob);
 			}
